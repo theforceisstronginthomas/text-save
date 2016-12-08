@@ -1,0 +1,294 @@
+<doctype html>
+
+
+<html>
+    
+    <head>
+        
+        
+        
+<!-- SAVE AS HTML OR TXT FILE -->
+    <script type="text/javascript">
+        
+        
+           
+ 
+
+    
+    var studentsArray =[];
+    
+    function init(){
+        
+        document.getElementById("tablerows").innerHTML="";
+        if (localStorage.studentsRecord){
+            studentsArray = JSON.parse(localStorage.studentsRecord);
+            for (var i=0; i <studentsArray.length; i++) {
+                
+                perpareTableCell(i,studentsArray[i].q1,studentsArray[i].policynum,studentsArray[i].q2,studentsArray[i].q3,studentsArray[i].q4,studentsArray[i].q5,studentsArray[i].q6,studentsArray[i].q7,studentsArray[i].q8,studentsArray[i].q9,studentsArray[i].q10);
+            }
+        }
+    }
+    
+    function onRegisterPressed () {
+        var q1 = document.getElementById("q1").value;
+        var policyNum = document.getElementById("policynum").value;
+        var q2 = document.getElementById("q2").value;
+        var q3 = document.getElementById("q3").value;
+        var q4 = document.getElementById("q4").value;
+        var q5 = document.getElementById("q5").value;
+        var q6 = document.getElementById("q6").value;
+        var q7 = document.getElementById("q7").value;
+        var q8 = document.getElementById("q8").value;
+        var q9 = document.getElementById("q9").value;
+        
+        var stuObj= { q1:q1,policynum:policyNum,q2:q2,q3:q3,q4:q4,q5:q5,q6:q6,q7:q7,q8:q8,q9:q9,subject:subject}
+        
+        if (selectedIndex === -1){
+          studentsArray.push(stuObj);   
+            
+        }else{
+            
+            studentsArray.splice(selectedIndex,1,stuObj);
+        }
+       
+                     
+        localStorage.studentsRecord = JSON.stringify(studentsArray);
+        init();
+        onclarpressed();
+        
+       
+        
+        
+                
+    }
+        function perpareTableCell (index,q1,policyNum,q2,q3,q4,q5,q6,q7,q8,q9,lastName,rollNum,subject) {
+            var table = document.getElementById("tablerows");
+            var row = table.insertRow()
+            var q1cell = row.insertCell(0)
+            var policyNumCell = row.insertCell(1);
+            var q2Cell = row.insertCell(2);
+            var q3Cell = row.insertCell(3);
+            var q4Cell = row.insertCell(4);
+            var q5Cell = row.insertCell(5);
+            var q6Cell = row.insertCell(6);
+            var q7Cell = row.insertCell(7);
+            var q8Cell = row.insertCell(8);
+            var q9Cell = row.insertCell(9);
+            var actionCell = row.insertCell(10);
+            
+            q1cell.innerHTML = q1;
+            policyNumCell.innerHTML = policyNum;
+            q2Cell.innerHTML = q2;
+            q3Cell.innerHTML = q3;
+            q4Cell.innerHTML = q4;
+            q5Cell.innerHTML = q5;
+            q6Cell.innerHTML = q6;
+            q7Cell.innerHTML = q7;
+            q8Cell.innerHTML = q8;
+            q9Cell.innerHTML = q9;
+            actionCell.innerHTML = '<button onclick="onEditpressed('+index+')">Edit</button><br><button onclick="deleteTableRow('+index+')">Delect</button>';
+        }
+
+    function deleteTableRow(index){
+        /*var table = document.getElementById("regtable"); 
+        table.deleteRow(index+1);*/
+        studentsArray.splice(index,1);
+        localStorage.studentsRecord = JSON.stringify(studentsArray);
+        init();
+    }
+    
+    function onclarpressed(){
+        selectedIndex = -1;        
+        document.getElementById("q1").value="";
+        document.getElementById("policynum").value="";
+        document.getElementById("q2").value="";
+        document.getElementById("q3").value="";
+        document.getElementById("q4").value="";
+        document.getElementById("q5").value="";
+        document.getElementById("q6").value="";
+        document.getElementById("q7").value="";
+        document.getElementById("q8").value="";
+        document.getElementById("q9").value=""; 
+        document.getElementById('submit').innerHTML = "Register";
+    }
+    var selectedIndex = -1;
+    function onEditpressed(index){
+        selectedIndex = index;
+        var stuObj = studentsArray[index];
+        document.getElementById("q1").value = stuObj.q1;
+        document.getElementById("policynum").value = stuObj.policynum;
+        document.getElementById("q2").value = stuObj.q2;
+        document.getElementById("q3").value = stuObj.q3;
+        document.getElementById("q4").value = stuObj.q4;
+        document.getElementById("q5").value = stuObj.q5;
+        document.getElementById("q6").value = stuObj.q6;
+        document.getElementById("q7").value = stuObj.q7;
+        document.getElementById("q8").value = stuObj.q8;
+        document.getElementById("q9").value = stuObj.q9;
+        document.getElementById('submit').innerHTML = "Update";
+    }
+
+
+        
+            // Wait for the page to load first
+            window.onload = function() {
+
+              //Get a reference to the link on the page
+              // with an id of "exportxt"
+              var a = document.getElementById("exportxt");
+
+              //Set code to run when the link is clicked
+              // by assigning a function to "onclick"
+              a.onclick = function() {
+
+                // Your code here...
+
+
+    function downloadInnerHtml(filename, elId, mimeType) {
+        var elHtml = document.getElementById(elId).innerHTML;
+        var link = document.createElement('a');
+        mimeType = mimeType || 'text/plain';
+        link.setAttribute('download', filename);
+        link.setAttribute('href', 'data:' + mimeType  +  ';charset=utf-8,' + encodeURIComponent(elHtml));
+        link.click(); 
+    }
+    var fileName =  'myexportedhtml.txt'; // You can use the .txt extension if you want
+    downloadInnerHtml(fileName, 'editor','text/plain');
+                //If you don't want the link to actually 
+                // redirect the browser to another page, then
+                // return false at the end of this block.
+                // Note that this also prevents event bubbling,
+                // which is probably what we want here, but won't 
+                // always be the case.
+                return false;
+              }
+            }
+
+    </script>
+    </head>
+
+
+
+<body onload="init()">  
+    
+    <div class="container">
+    <fieldset>
+    <header class="headerbar top"><center><strong>FOCUS LIFE ASSURANCE COMPANY LTD</strong></center>
+     </header>
+        </fieldset>
+    <aside class="leftbar">
+        <div>
+        <fieldset>
+                <LEGEND ACCESSKEY=C><strong>ARE YOU AN EXISTING FOCUS LIFE CUSTOMER?</strong></LEGEND>
+
+            <label for="q1">Yes/No</label>
+            <select id="q1">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            </select>
+            <br>
+            <br>
+            <label for="policynum"><span> If yes, provide customer ID/policy No:</span></label>
+            <input type="text" placeholder="enter policy No." id="policynum">
+            </fieldset>
+            
+            <fieldset>
+                <LEGEND ACCESSKEY=C><strong>ASSIGNMENT :Do you want to assign this policy to your insurance?</strong></LEGEND>
+                <br>
+            <label for="q2">Yes/No</label>
+            <select id="q2">
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            </select>
+            </fieldset>
+            <fieldset>
+            <label for="q3"><span> Type of cover you are proposing:</span></label>
+            <input type="text" placeholder="Type of cover." id="q3">
+            </fieldset>
+            <fieldset>
+                <LEGEND ACCESSKEY=C><strong>DETAILS OF PROPOSER</strong></LEGEND>
+                
+            <select id="q4">
+            <option value="Mr">Mr</option>
+            <option value="Ms">Ms</option>
+            <option value="Mrs">Ms</option>
+            </select>
+                <br>
+                <br>
+                <label for="q5"><span> First Name:</span></label>
+            <input type="text" placeholder="First Name" id="q5">
+                <br>
+                <label for="q6"><span> Middle Name:</span></label>
+            <input type="text" placeholder="Middle Name" id="q6">
+                <br>
+                <label for="q7"><span> last name</span></label>
+            <input type="text" placeholder="last name" id="q7">
+            </fieldset>
+            <fieldset>
+            <label for="q8"><span>Father's name(female proposer only):</span></label>
+            <input type="text" placeholder="female proposer only" id="q8">
+            <label for="q9"><span>Maiden Name:</span></label>
+            <input type="text" placeholder="Maiden Name:" id="q9">
+                
+            </fieldset>
+        <fieldset>
+            <label for="subject"> subject</label>
+            <select id="subject">
+            
+            
+            </select>
+            </fieldset>
+            
+            
+            <fieldset>
+            <center>
+            <label for="submit"></label>
+            <button id="clear" onclick="onclarpressed()">clear</button>
+            <button id="submit" onclick="onRegisterPressed()">Register</button>
+            </center>
+            
+            </fieldset>
+          
+    </div>    
+        </aside>
+        <div id="container" style="max-height:174px; overflow-y:auto;max-width:900px; overflow-x:auto">
+        <aside class="rightbar">
+            <a id="exportxt" href="#">SAVE PROJECT IN TXT FILE</a> 
+        
+            <div id="editor"><p style="font-family:'Courier New', Courier, monospace; font-size:11px; color:#663300"><table id="regtable"  BORDER=1 CELLPADDING=1>
+            
+                <tr>
+                 
+
+ <th>yes/no</th>
+                <th>Policy No.</th>
+                <th>yes/no</th>
+                <th>Type of cover:</th>
+                <th>status:</th>
+                    
+                <th>first name</th>
+                <th>Middle Name:</th>
+                <th>last name</th>
+                <th>Father's name(female proposer only):</th>
+                <th>Maiden Name:</th>
+                    <br>
+                <th>Action</th></p></div>
+
+            
+                
+                </tr>
+                
+                <tbody id="tablerows">
+                
+                </tbody>
+            
+            </table>
+        
+        </aside>
+    
+        <footer class="headerbar bottom"></footer>
+</div>
+    
+    </body>
+    
+    </html>
